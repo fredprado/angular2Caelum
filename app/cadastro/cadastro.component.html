@@ -1,0 +1,51 @@
+<div class="jumbotron">
+  <h1 class="text-center"> {{title}} </h1>
+</div>
+
+<div class="container">
+
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="input-group">
+        <span class="input-group-btn">
+           <a [routerLink]="['/']" class="btn btn-primary">Listar fotos</a>
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <form [formGroup]="meuForm" (submit)="cadastrar($event)">
+    <div *ngIf="mensagem" class="alert alert-success alert-dismissable">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Success!</strong> {{mensagem}}
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="">Título</label>
+          <input formControlName="titulo" name="titulo" required [(ngModel)]="foto.titulo" type="text" class="form-control">
+          <div *ngIf="meuForm.controls.titulo.invalid">
+            <span *ngIf="meuForm.controls.titulo.errors.required" class="form-control alert-danger">Título é obrigatório</span>
+            <span *ngIf="meuForm.controls.titulo.errors.minlength" class="form-control alert-danger">Digita mais ae!</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">URL</label>
+          <input formControlName="url" required name="url" [(ngModel)]="foto.url" type="text" class="form-control">
+          <span *ngIf="meuForm.controls.url.invalid" class="form-control alert-danger">URL é obrigatório</span>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="(foto.titulo != '' && foto.url != '')">
+        <painel titulo="{{foto.titulo}}">
+          <foto url="{{foto.url}}" titulo="{{foto.titulo}}"></foto>
+        </painel>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="meuForm.invalid">Salvar</button>
+  </form>
+
+</div>
